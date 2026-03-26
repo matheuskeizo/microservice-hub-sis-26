@@ -1,0 +1,32 @@
+package br.com.fiap.ms_pedidos.controller;
+
+import br.com.fiap.ms_pedidos.DTO.PedidoDTO;
+import br.com.fiap.ms_pedidos.service.PedidoService;
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/pedidos")
+public class PedidoController {
+    @Autowired
+    private PedidoService pedidoService;
+
+    @GetMapping
+    public ResponseEntity<List<PedidoDTO>> getAllPedidos(){
+        List<PedidoDTO> dto = pedidoService.findAllPedidos();
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PedidoDTO> getPedido(@PathVariable Long id){
+        PedidoDTO pedidoDTO = pedidoService.findPedidoById(id);
+        return ResponseEntity.ok(pedidoDTO);
+    }
+}
