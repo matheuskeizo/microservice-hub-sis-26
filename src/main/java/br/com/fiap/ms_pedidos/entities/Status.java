@@ -8,5 +8,5 @@ public enum Status  {
     FLAHA_PAGAMENTO,
     SAIU_PARA_ENTREGA,
     ENTREGUE,
-    CANCELADO,
+    CANCELADO
 }

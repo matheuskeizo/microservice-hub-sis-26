@@ -27,7 +27,7 @@ public class Pedido {
     private String cpf;
     private LocalDate data;
     @Enumerated(EnumType.STRING)
-    private String status;
+    private Status status;
     //valor calculado
     private BigDecimal valorTotal;
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.PERSIST, orphanRemoval = true)

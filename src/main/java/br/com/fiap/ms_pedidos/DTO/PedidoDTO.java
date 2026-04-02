@@ -2,10 +2,12 @@ package br.com.fiap.ms_pedidos.DTO;
 
 import br.com.fiap.ms_pedidos.entities.ItemDoPedido;
 import br.com.fiap.ms_pedidos.entities.Pedido;
+import br.com.fiap.ms_pedidos.entities.Status;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -31,9 +33,12 @@ public class PedidoDTO {
     private String cpf;
     private LocalDate data;
     @Enumerated(EnumType.STRING)
-    private String status;
+    private Status status;
     private BigDecimal valorTotal;
-    private List<@Valid ItemDoPedidoDTO> itens = new ArrayList<>();
+
+
+        @NotEmpty(message = "Pedido deve ter pelo menos um item")
+        private List<@Valid ItemDoPedidoDTO> itens = new ArrayList<>();
 
     public PedidoDTO(Pedido pedido){
         id=pedido.getId();

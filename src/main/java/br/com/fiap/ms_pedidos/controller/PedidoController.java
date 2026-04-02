@@ -2,14 +2,14 @@ package br.com.fiap.ms_pedidos.controller;
 
 import br.com.fiap.ms_pedidos.DTO.PedidoDTO;
 import br.com.fiap.ms_pedidos.service.PedidoService;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -29,4 +29,19 @@ public class PedidoController {
         PedidoDTO pedidoDTO = pedidoService.findPedidoById(id);
         return ResponseEntity.ok(pedidoDTO);
     }
+
+    @PostMapping
+    public  ResponseEntity<PedidoDTO> createPedido(@RequestBody @Valid PedidoDTO pedidoDTO){
+        pedidoDTO= pedidoService.savePedido(pedidoDTO);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(pedidoDTO.getId()).toUri();
+        return ResponseEntity.created(uri).body(pedidoDTO);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PedidoDTO> updatePedido(@PathVariable Long id, @RequestBody @Valid PedidoDTO pedidoDTO){
+        pedidoDTO=pedidoService.updatePedido(id,pedidoDTO);
+        return ResponseEntity.ok(pedidoDTO);
+    }
 }
+
